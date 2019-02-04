@@ -1,7 +1,8 @@
 package UserTest;
 
-import Usuario.Usuario;
 import Usuario.UserHandler;
+import Usuario.UserService;
+import Usuario.Usuario;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -16,48 +17,78 @@ public class UserTest {
     @Test
     public void Creamos_Usuario_enClase_externa () {
         UserHandler handler = new UserHandler();
-        Usuario user1 = handler.usuario;
-        Assert.assertNotEquals(user1, null);
+        Usuario usuario = handler.usuario;
+        Assert.assertNotEquals(usuario, null);
     }
 
     @Test
     public void Login_usuario_correcto () {
-        Usuario user2 = new Usuario ();
-        String expected = "1234";
-        String actual = user2.Login("1234");
-        Assert.assertEquals(expected, actual);
+
+        UserService userservice = new UserService();
+
+        Usuario usuario = new Usuario();
+        usuario.setName("joan");
+        usuario.setPassword("1234");
+
+        String actual = userservice.login(usuario);
+        String expected = "joan1234";
+        Assert.assertEquals(actual, expected);
+
     }
 
     @Test
-    public void enviaPaqueteAsucasa_correcto () {
-        Usuario user3 = new Usuario ();
-        String expected = "llega_19:00_direccion";
-        String actual = user3.EnviaPaqueteAsuCasa("llega_19:00_direccion");
-        Assert.assertEquals(expected, actual);
+    public void Enviar_paquete_a_sucasa_correcto() {
+
+        UserService userservice = new UserService();
+
+        Usuario usuario = new Usuario();
+        usuario.setDirecion("Casp 5 1");
+        usuario.setClasePaquete("DVD Big Bang Theory");
+        boolean actual = userservice.enviarPaqueteAsuCasa(usuario);
+        boolean expected = true;
+        Assert.assertEquals(actual, expected);
+
     }
 
     @Test
-    public void enviarFactura_correcto () {
-        Usuario user4 = new Usuario ();
-        String expected = "envia_Fact_19.00_direccion";
-        String actual = user4.EnviarFactura("envia_Fact_19.00_direccion");
-        Assert.assertEquals(expected, actual);
+    public void enviar_Factura_Correcto () {
+
+        UserService userservice = new UserService();
+
+        Usuario usuario = new Usuario();
+        usuario.setDirecion("Casp 5 1");
+        usuario.setCodigoFactura("11111");
+        boolean actual = userservice.enviarFactura(usuario);
+        boolean expected = true;
+        Assert.assertEquals(actual, expected);
+
     }
 
     @Test
-    public void enviarMail_correcto () {
-        Usuario user5 = new Usuario ();
-        String expected = "mail@gmail.com";
-        String actual = user5.EnviarMail("mail@gmail.com");
-        Assert.assertEquals(expected, actual);
+    public void enviar_Email_Correcto () {
+
+        UserService userservice = new UserService();
+
+        Usuario usuario = new Usuario();
+        usuario.setEmail("mail@gmail.com");
+        boolean actual = userservice.enviarEmail(usuario);
+        boolean expected = true;
+        Assert.assertEquals(actual, expected);
+
     }
 
     @Test
-    public void crearUnSombreroPersonalizado_correcto () {
-        Usuario user5 = new Usuario ();
-        String expected = "sombrero_talla_30";
-        String actual = user5.crearUnSombreroPersonalizado("sombrero_talla_30");
-        Assert.assertEquals(expected, actual);
+    public void crear_Sombrero_Correcto () {
+
+        UserService userservice = new UserService();
+
+        Usuario usuario = new Usuario();
+        usuario.setMedidasCabeza("44,45");
+        usuario.setCaracteristicas("blanco, copa");
+        boolean actual = userservice.crearSombreroPersonalizado(usuario);
+        boolean expected = true;
+        Assert.assertEquals(actual, expected);
+
     }
 
 }
